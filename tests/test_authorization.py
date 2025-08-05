@@ -2,16 +2,35 @@ import pytest  # Импортируем библиотеку pytest
 from playwright.sync_api import expect, Page
 
 
+# Тестовые данные: (email, password)
+email_and_password = [
+    ("user.name@gmail.com", "password"),
+    ("user.name@gmail.com", "  "),
+    ("  ", "password"),
+]
+
+# Описания для ids
+ids = [
+    "Проверяем, что пользователь не может войти в систему с невалидными email и password",
+    "Проверяем, что пользователь не может войти в систему с невалидным email, и пустым password",
+    "Проверяем, что пользователь не может войти в систему с пустым email, и невалидным password",
+]
+
+@pytest.mark.parametrize(
+    "email, password",
+    email_and_password,
+    ids=ids
+)
 @pytest.mark.regression  # Добавили маркировку regression
 @pytest.mark.authorization  # Добавили маркировку authorization
-def test_wrong_email_or_password_authorization(chromium_page: Page):  # Создаем тестовую функцию
+def test_wrong_email_or_password_authorization(chromium_page: Page, email: str, password: str):  # Создаем тестовую функцию
     chromium_page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/auth/login")
 
     email_input = chromium_page.get_by_test_id('login-form-email-input').locator('input')
-    email_input.fill("user.name@gmail.com")
+    email_input.fill(email)
 
     password_input = chromium_page.get_by_test_id('login-form-password-input').locator('input')
-    password_input.fill("password")
+    password_input.fill(password)
 
     login_button = chromium_page.get_by_test_id('login-page-login-button')
     login_button.click()
