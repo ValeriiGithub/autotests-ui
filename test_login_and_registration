@@ -26,7 +26,7 @@ with sync_playwright() as playwright:
     expect(registration_email_input).to_be_visible()
     
     registration_password_input = page.get_by_test_id('registration-form-password-input').locator('input')
-    registration_password_input = page.get_by_test_id('registration-form-password-input').locator('input')
+    expect(registration_password_input).to_be_visible()
 
     registration_button = page.get_by_test_id('registration-page-registration-button')
     expect(registration_button).to_be_visible()

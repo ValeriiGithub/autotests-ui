@@ -18,6 +18,7 @@ with sync_playwright() as playwright:
     # """)
 
     # Пример: передача аргументов через анонимную функцию
+    next_text = 'New Text'
     page.evaluate(
     """
     (text) => { // Принимаем аргумент в JS функуии
@@ -25,7 +26,7 @@ with sync_playwright() as playwright:
         title.textContent = text;
     }
     """,
-    'New Text'  # Передаём аргумент из Python
+    next_text  # Передаём аргумент из Python
 )
 
     # Альтернативный способ передачи аргумента:
