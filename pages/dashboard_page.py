@@ -1,10 +1,17 @@
 from playwright.sync_api import expect, Locator
+from components.navigation.sidebar_component import SidebarComponent
 from pages.base_page import BasePage
+from components.navigation.navbar_component import NavbarComponent
 
 
 class DashboardPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
+
+        self.sidebar = SidebarComponent(page)
+
+
+        self.navbar: NavbarComponent = NavbarComponent(page) 
 
         self.dashboard_title: Locator = page.get_by_test_id('dashboard-toolbar-title-text')
 
@@ -20,9 +27,10 @@ class DashboardPage(BasePage):
         self.scores_title: Locator = page.get_by_test_id('scores-widget-title-text')
         self.scores_chart: Locator = page.get_by_test_id('scores-scatter-chart')
 
-    def check_visible_dashboard_title(self):
-        expect(self.dashboard_title).to_be_visible()
-        expect(self.dashboard_title).to_have_text('Dashboard')
+    def check_visible_students_chart(self):
+        # Здесь и так понятно, что мы проверяем видимость Navbar
+        # Поэтому писать self.navbar.check_visible_navbar(...) будет просто излишним
+        self.navbar.check_visible()
 
     def check_visible_dashboard_title(self):
         expect(self.dashboard_title).to_be_visible()
