@@ -17,7 +17,7 @@ def registration_page(chromium_page: Page) -> RegistrationPage:
     return RegistrationPage(page=chromium_page)
 
 @pytest.fixture
-def dashboar_page(chromium_page: Page) -> DashboardPage:
+def dashboard_page(chromium_page: Page) -> DashboardPage:
     return DashboardPage(page=chromium_page)
 
 @pytest.fixture

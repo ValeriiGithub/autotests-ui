@@ -1,4 +1,6 @@
 from playwright.sync_api import expect, Locator
+from components.charts.chart_view_component import ChartViewComponent
+from components.dashboard.dashboard_toolbar_view_component import DashboardToolbarViewComponent
 from components.navigation.sidebar_component import SidebarComponent
 from pages.base_page import BasePage
 from components.navigation.navbar_component import NavbarComponent
@@ -8,53 +10,24 @@ class DashboardPage(BasePage):
     def __init__(self, page):
         super().__init__(page)
 
-        self.sidebar = SidebarComponent(page)
-
-
         self.navbar: NavbarComponent = NavbarComponent(page) 
-
-        self.dashboard_title: Locator = page.get_by_test_id('dashboard-toolbar-title-text')
-
-        self.students_title: Locator = page.get_by_test_id('students-widget-title-text')
-        self.students_chart: Locator = page.get_by_test_id('students-bar-chart')
-
-        self.activities_title: Locator = page.get_by_test_id('activities-widget-title-text')
-        self.activities_chart: Locator = page.get_by_test_id('activities-line-chart')
-
-        self.courses_title: Locator = page.get_by_test_id('courses-widget-title-text')
-        self.courses_chart: Locator = page.get_by_test_id('courses-pie-chart')
-
-        self.scores_title: Locator = page.get_by_test_id('scores-widget-title-text')
-        self.scores_chart: Locator = page.get_by_test_id('scores-scatter-chart')
+        self.sidebar = SidebarComponent(page)
+        self.scores_chart = ChartViewComponent(page, 'scores', 'scatter')
+        self.courses_chart = ChartViewComponent(page, 'courses', 'pie')
+        self.students_chart = ChartViewComponent(page, 'students', 'bar')
+        self.activities_chart = ChartViewComponent(page, 'activities', 'line')
+        self.dashboard_toolbar_view  = DashboardToolbarViewComponent(page)
 
     def check_visible_students_chart(self):
-        # Здесь и так понятно, что мы проверяем видимость Navbar
-        # Поэтому писать self.navbar.check_visible_navbar(...) будет просто излишним
-        self.navbar.check_visible()
-
-    def check_visible_dashboard_title(self):
-        expect(self.dashboard_title).to_be_visible()
-        expect(self.dashboard_title).to_have_text('Dashboard')
-
-    def check_visible_students_chart(self):
-        expect(self.students_title).to_be_visible()
-        expect(self.students_title).to_have_text('Students')
-        expect(self.students_chart).to_be_visible()
-
-    def check_visible_courses_chart(self):
-        expect(self.courses_title).to_be_visible()
-        expect(self.courses_title).to_have_text('Courses')
-        expect(self.courses_chart).to_be_visible()
+        self.students_chart.check_visible('Students')
 
     def check_visible_activities_chart(self):
-        expect(self.activities_title).to_be_visible()
-        expect(self.activities_title).to_have_text('Activities')
-        expect(self.activities_chart).to_be_visible()
+        self.activities_chart.check_visible('Activities')
+
+    def check_visible_courses_chart(self):
+        self.courses_chart.check_visible('Courses')
 
     def check_visible_scores_chart(self):
-        expect(self.scores_title).to_be_visible()
-        expect(self.scores_title).to_have_text('Scores')
-        expect(self.scores_chart).to_be_visible()
-
+        self.scores_chart.check_visible('Scores')
 
 
