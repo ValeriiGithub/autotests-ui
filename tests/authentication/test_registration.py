@@ -25,7 +25,7 @@ from tools.routes import AppRoute
 class TestRegistration:
     @allure.title("Registration with correct email, username and password")
     @allure.severity(Severity.CRITICAL)
-    def test_successful_registration(self, dashboard_page: DashboardPage, registration_page: RegistrationPage, email, username, password):  # Создаем тестовую функцию
+    def test_successful_registration(self, dashboard_page: DashboardPage, registration_page: RegistrationPage):  # Создаем тестовую функцию
         registration_page.visit(AppRoute.REGISTRATION)
         registration_page.registration_form.fill(
             email=settings.test_user.email, 
