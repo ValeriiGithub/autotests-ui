@@ -187,3 +187,9 @@ fabric.properties
 .token
 
 .vscode
+
+allure-results
+
+tracing
+
+videos
