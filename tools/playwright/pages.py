@@ -1,3 +1,5 @@
+import uuid
+
 import allure
 from playwright.sync_api import Playwright, Page
 
@@ -24,7 +26,8 @@ def initialize_playwright_page(
 
     yield page
 
-    context.tracing.stop(path=settings.tracing_dir.joinpath(f'{test_name}.zip'))
+    context.tracing.stop(path=settings.tracing_dir.joinpath(f'{uuid.uuid4()}.zip'))
+    # context.tracing.stop(path=settings.tracing_dir.joinpath(f'{test_name}.zip'))
     browser.close()
 
     allure.attach.file(settings.tracing_dir.joinpath(f'{test_name}.zip'), name='trace', extension='zip')
