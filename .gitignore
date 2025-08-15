@@ -188,8 +188,14 @@ fabric.properties
 
 .vscode
 
+# allure
 allure-results
+allure-report
 
+# testing artifacts
+# !*.txt - с ВОСКЛИЦАТЕЛЬНЫМ ЗНАКОМ - не игнорировать
+*.html
+*.json
+videos
 tracing
 
-videos
